@@ -1,2 +1,2 @@
 # Anime-Wiki
-Anime WIki Project
+This is the Readme file of The project website Anime-Wiki
