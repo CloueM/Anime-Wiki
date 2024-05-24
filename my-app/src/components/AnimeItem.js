@@ -113,7 +113,6 @@ function AnimeItem() {
 
 const AnimeItemStyled = styled.div`
     padding: 3rem 18rem;
-    background-color: #303841;
 
     h1, .title{
         font-size: 3rem;

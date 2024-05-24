@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer, useState } from "react";
 
 const GlobalContext = createContext();
 const base_url = "https://api.jikan.moe/v4";
@@ -22,7 +22,7 @@ const reducer = (state, action) => {
             return {
                ...state,
                 isSearch: true,
-                searcResults: action.payload,
+                searchResults: action.payload,
             };
         case GET_POPULAR_ANIME:
             return {
@@ -62,7 +62,33 @@ export const GlobalContextProvider = ({children}) => {
     };
 
     const [state, dispatch] = useReducer(reducer, initialState);
-    
+    const [search, setSearch] = useState("");
+
+    //Handle Change
+    const handleChange = (e) => {
+        setSearch(e.target.value);
+        if (e.target.value === "") {
+            state.isSearch = false;
+        }
+    };
+
+    //Handle Submit
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (search) {
+            searchAnime(search);
+        }else{
+            alert("Please enter an anime to search");
+        }
+    };
+
+    //Search Anime
+    const searchAnime = async (anime) => {
+        dispatch({type: LOADING})
+        const response = await fetch(`${base_url}/anime?q=${anime}&order_by=popularity&sort=asc&sfw`);
+        const data = await response.json();
+        dispatch({type: SEARCH, payload: data.data})
+    }
 
     // Fetch popular Anime
     const getPopularAnime = async () => {
@@ -70,6 +96,22 @@ export const GlobalContextProvider = ({children}) => {
         const response = await fetch(`${base_url}/top/anime?filter=bypopularity`)
         const data = await response.json();
         dispatch({type: GET_POPULAR_ANIME, payload:data.data})
+    };
+
+    //Fetch Upcoming Anime
+    const getUpcomingAnime = async () => {
+        dispatch({type: LOADING})
+        const response = await fetch(`${base_url}/top/anime?filter=upcoming`)
+        const data = await response.json();
+        dispatch({type: GET_UPCOMING_ANIME, payload:data.data})
+    };
+
+    //Fetch Airing Anime
+    const getAiringAnime = async () => {
+        dispatch({type: LOADING})
+        const response = await fetch(`${base_url}/top/anime?filter=airing`)
+        const data = await response.json();
+        dispatch({type: GET_AIRING_ANIME, payload:data.data})
     };
 
     //initial render
@@ -80,6 +122,13 @@ export const GlobalContextProvider = ({children}) => {
     return(
         <GlobalContext.Provider value={{
             ...state,
+            handleChange,
+            handleSubmit,
+            searchAnime,
+            getPopularAnime,
+            getUpcomingAnime,
+            getAiringAnime,
+            search,
         }}>
             {children}
         </GlobalContext.Provider>
