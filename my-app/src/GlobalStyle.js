@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
         list-style: none;
         text-decoration: none;
         font-family: 'Ubuntu', sans-serif;
+        
     }
     .ubuntu-regular {
             font-family: "Ubuntu", sans-serif;
@@ -16,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
             font-style: normal;
         }
     body {
-        background-color: White;
+        background-color: #222831;
     }
 `;
 
