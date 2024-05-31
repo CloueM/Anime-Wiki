@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 function AnimeItem() {
