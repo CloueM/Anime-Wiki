@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useGlobalContext } from '../context/global';
-//hello
+
 function Airing({rendered}){
     const {airingAnime, isSearch, searchResults} = useGlobalContext();
 
