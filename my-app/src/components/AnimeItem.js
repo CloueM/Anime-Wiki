@@ -50,7 +50,7 @@ function AnimeItem() {
         getAnime(id)
         getCharacters(id)
     }, [])
-
+    
     return (
         <AnimeItemStyled>
             <h1>{title}</h1>
